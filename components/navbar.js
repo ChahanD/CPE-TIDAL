@@ -1,29 +1,36 @@
 export class Navbar {
     constructor(currentPage) {
         this.element = document.createElement('div');
+
+        const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const navbarColor = isDarkMode ? 'navbar-dark bg-dark' : 'navbar-light bg-light';
+
+        const adaptLinkToPage = currentPage == 'index' ? './pages/' : './';
+        const adaptLinkToIndex = currentPage == 'index' ? './' : '../';
+
         this.element.innerHTML = `
-            <nav class="navbar navbar-expand navbar-dark bg-dark">
-                <a class="navbar-brand ps-3" href="index.html">
-                    <img src="img/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""/>
+            <nav class="navbar navbar-expand ${navbarColor}">
+                <a class="navbar-brand ps-3" href="${adaptLinkToIndex}index.html">
+                    <img src="../ressources/images/logo.webp" width="30" height="30" class="d-inline-block align-top" alt=""/>
                 </a>
 
                 <div class="collapse navbar-collapse d-flex" id="navbarNav">
                     <ul class="navbar-nav">
                         ${currentPage !== 'index' ? `
                             <li class="nav-item active">
-                                <a class="nav-link" href="index.html">Accueil</a>
+                                <a class="nav-link" href="${adaptLinkToIndex}index.html">Accueil</a>
                             </li>
                         ` : ''}
 
                         ${currentPage !== 'patho' ? `
                             <li class="nav-item active">
-                                <a class="nav-link" href="patho.html">Pathologies</a>
+                                <a class="nav-link" href="${adaptLinkToPage}patho.html">Pathologies</a>
                             </li>
                         ` : ''}
 
                         ${currentPage !== 'sympto' ? `
                             <li class="nav-item active">
-                                <a class="nav-link" href="sympto.html">Symptômes</a>
+                                <a class="nav-link" href="${adaptLinkToPage}sympto.html">Symptômes</a>
                             </li>
                         ` : ''}
                         </ul>
@@ -31,7 +38,7 @@ export class Navbar {
                     ${currentPage !== 'profil' ? `
                         <ul class="navbar-nav ms-auto pe-3">
                             <li class="nav-item active">
-                                <a class="nav-link" href="profil.html">Profil</a>
+                                <a class="nav-link" href="${adaptLinkToPage}profil.html">Profil</a>
                             </li>
                         </ul>
                     ` : ''}
