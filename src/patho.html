@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Pathologie</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Index</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Symptome</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="mt-4">Pathologie Recherché</h1>
+        <input class="form-control" id="search" type="text" placeholder="Rechercher la pathologie">
+        <div id="pathologies-list" class="mt-4"></div>
+    </div>
+
+    <script>
+        var pathologiesData = [
+            {name: "pathologie1", description: "Ceci est une generation de description super interessante a propos d'un pathologie de pieds de nains", symptoms: "Si vous avez les symptomes suivants attention a vos fesses"},
+            {name: "pathologie2", description: "Description de pathologie2", symptoms: "Symptômes de pathologie2"},
+            {name: "pathologie3", description: "Description de pathologie3", symptoms: "Symptômes de pathologie3"}
+        ];
+
+        pathologiesData.forEach(function(pathologie) {
+            $('#pathologies-list').append(`
+                <div id="${pathologie.name}" class="card mt-4" style="display: none;">
+                    <div class="card-header">
+                        <h2>${pathologie.name}</h2>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <img class="card-img-top" src="https://via.placeholder.com/150" alt="${pathologie.name}" style="width: 100%; max-width: 300px; height: auto;">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Description</h5>
+                        <p class="card-text">${pathologie.description}</p>
+                        <h5 class="card-title">Symptômes</h5>
+                        <p class="card-text">${pathologie.symptoms}</p>
+                    </div>
+                </div>
+            `);
+        });
+
+        $('#search').on('keyup', function() {
+            var value = $(this).val().toLowerCase();
+            $("#pathologies-list .card").hide();
+            $("#" + value).show();
+        });
+    </script>
+</body>
+</html>
