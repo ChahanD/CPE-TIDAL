@@ -9,6 +9,12 @@ export class Navbar {
 
                 <div class="collapse navbar-collapse d-flex" id="navbarNav">
                     <ul class="navbar-nav">
+                        ${currentPage !== 'index' ? `
+                            <li class="nav-item active">
+                                <a class="nav-link" href="index.html">Accueil</a>
+                            </li>
+                        ` : ''}
+
                         ${currentPage !== 'patho' ? `
                             <li class="nav-item active">
                                 <a class="nav-link" href="patho.html">Pathologies</a>
