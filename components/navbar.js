@@ -6,7 +6,7 @@ export class Navbar {
         const navbarColor = isDarkMode ? 'navbar-dark bg-dark' : 'navbar-light bg-light';
 
         this.element.innerHTML = `
-            <nav class="navbar navbar-expand ${navbarColor}">
+            <nav id="navbar" class="navbar navbar-expand ${navbarColor}">
                 <a class="navbar-brand ps-3" href="./index.html">
                     <img src="../ressources/images/logo.webp" width="30" height="30" class="d-inline-block align-top" alt=""/>
                 </a>
@@ -32,10 +32,10 @@ export class Navbar {
                         ` : ''}
                         </ul>
 
-                    ${currentPage !== 'profil' ? `
+                    ${currentPage !== 'authentication' ? `
                         <ul class="navbar-nav ms-auto pe-3">
                             <li class="nav-item active">
-                                <a class="nav-link" href="./profil.html">Profil</a>
+                                <a class="nav-link" href="./authentication.html">Authentification</a>
                             </li>
                         </ul>
                     ` : ''}
