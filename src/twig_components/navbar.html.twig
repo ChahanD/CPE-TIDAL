@@ -1,0 +1,35 @@
+<nav id="navbar" class="navbar navbar-expand {{ navbarColor }}">
+    <a class="navbar-brand ps-3" href="{{ path('index') }}">
+        <img src="{{ asset('images/logo.webp') }}" width="30" height="30" class="d-inline-block align-top" alt=""/>
+    </a>
+
+    <div class="collapse navbar-collapse d-flex" id="navbarNav">
+        <ul class="navbar-nav">
+            {% if currentPage != 'index' %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('index') }}">Accueil</a>
+                </li>
+            {% endif %}
+
+            {% if currentPage != 'patho' %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('patho') }}">Pathologies</a>
+                </li>
+            {% endif %}
+
+            {% if currentPage != 'sympto' %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('sympto') }}">Symptômes</a>
+                </li>
+            {% endif %}
+        </ul>
+
+        {% if currentPage != 'authentication' %}
+            <ul class="navbar-nav ms-auto pe-3">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('authentication') }}">Authentification</a>
+                </li>
+            </ul>
+        {% endif %}
+    </div>
+</nav>
