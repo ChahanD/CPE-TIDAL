@@ -54,6 +54,23 @@
                 </form>
             </div>
         </div>
+        <!-- Formulaire de Filtrage -->
+        <div class="row my-4">
+            <div class="col-12">
+                <!-- Formulaire... -->
+            </div>
+        </div>
+
+        <!-- Affichage du Filtre Actif et Bouton de Réinitialisation -->
+        <div class="row mb-3">
+            <div class="col-10">
+                <p>Filtre actif : <?php echo isset($_GET['meridien']) ? htmlspecialchars($_GET['meridien']) : "Aucun"; ?></p>
+            </div>
+            <div class="col-2">
+                <a href="symptome.php" class="btn btn-warning">Effacer les filtres</a>
+            </div>
+        </div>
+
 
 
 <?php
