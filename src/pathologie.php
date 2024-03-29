@@ -27,27 +27,55 @@
             <div class="col-12">
                 <h1>Recherche de pathologies</h1>
             </div>
-        </div>
-
-        <!-- Ici commence le formulaire de recherche -->
+        </div><!-- HTML -->
+        
+        <!-- Filter and Search Form -->
         <div class="row my-4">
             <div class="col-12">
                 <form action="pathologie.php" method="get">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Rechercher une pathologie" name="recherche_patho_desc" aria-label="Rechercher une pathologie" aria-describedby="button-addon-patho">
-                        <button class="btn btn-outline-secondary" type="submit" id="button-addon-patho">Rechercher</button>
+                        <input type="text" class="form-control" placeholder="Rechercher une pathologie" name="recherche_pathologie" aria-label="Rechercher une pathologie">
+                        <select name="symptome" class="form-select">
+                            <option value="">Choisir un Symptôme</option>
+                            <?php
+                            try {
+                                $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
+                                $symptomeQuery = $pdo->query("SELECT \"desc\" FROM symptome");
+                                while ($symptome = $symptomeQuery->fetch(PDO::FETCH_ASSOC)) {
+                                    echo "<option value=\"" . htmlspecialchars($symptome['ids']) . "\">" . htmlspecialchars($symptome['desc']) . "</option>";
+                                }
+                            } catch (PDOException $e) {
+                                echo "Erreur : " . $e->getMessage();
+                            }
+                            ?>
+                        </select>
+
+                        <!-- Dropdown for meridian -->
+                        <select name="meridien" class="form-select">
+                            <option value="">Choisir Méridiens</option>
+                            <?php
+                            include 'database.php';
+                            try {
+                                $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
+                                $meridienQuery = $pdo->query("SELECT code, nom FROM meridien");
+                                while ($meridien = $meridienQuery->fetch(PDO::FETCH_ASSOC)) {
+                                    echo "<option value=\"" . htmlspecialchars($meridien['code']) . "\">" . htmlspecialchars($meridien['nom']) . "</option>";
+                                }
+                            } catch (PDOException $e) {
+                                echo "Erreur : " . $e->getMessage();
+                            }
+                            ?>
+                        </select>
+                        <button class="btn btn-outline-secondary" type="submit">Filter</button>
                     </div>
                 </form>
             </div>
         </div>
-        <!-- Fin du formulaire de recherche -->
-
-        <!-- Ici, nous inclurons les résultats de recherche de PHP -->
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
+
 <?php
 require_once 'database.php';
 
