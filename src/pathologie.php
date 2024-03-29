@@ -7,10 +7,10 @@
     <meta name="author" content="BALLEUR, ESMILAIRE, DONIKIAN, DI-MEO">
     <title>Page pathologies</title>
 
+    <link rel="stylesheet" href="style.css">
     <link rel="icon" href="../ressources/images/logo.webp" type="image/webp">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -18,7 +18,6 @@
         <div class="text-center my-4">
             <a href="index.php" class="btn btn-primary">Retour à l'accueil</a>
             <a href="symptome.php" class="btn btn-primary">Retour aux symptômes</a>
-
         </div>
     </header>
 
@@ -27,14 +26,17 @@
             <div class="col-12">
                 <h1>Recherche de pathologies</h1>
             </div>
-        </div><!-- HTML -->
+        </div>
 
         <!-- Filter and Search Form -->
         <div class="row my-4">
             <div class="col-12">
                 <form action="pathologie.php" method="get">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Rechercher une pathologie" name="recherche_pathologie" aria-label="Rechercher une pathologie">
+                        <div class="position-relative">
+                            <input type="text" class="form-control" id="searchInputPathologie" placeholder="Rechercher une pathologie" name="recherche_pathologie" aria-label="Rechercher une pathologie" autocomplete="off">
+                            <div id="suggestionsBoxPathologie" class="dropdown-menu" style="display: none;"></div>
+                        </div>
                         <?php include 'database.php';?>
                         <select name="symptome" class="form-select">
                             <option value="">Choisir un Symptôme</option>
@@ -83,7 +85,7 @@
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         if (isset($_GET['recherche_pathologie']) && !empty($_GET['recherche_pathologie'])) {
-            $stmt_patho_desc = $conn->prepare("SELECT * FROM patho WHERE desc ILIKE :desc");
+            $stmt_patho_desc = $conn->prepare("SELECT * FROM patho WHERE \"desc\" ILIKE :desc");
             $stmt_patho_desc->execute(['desc' => '%' . $_GET['recherche_pathologie'] . '%']);
         } elseif (isset($_GET['symptome']) && !empty($_GET['symptome'])) {
             $stmt_patho_desc = $conn->prepare("SELECT patho.* FROM patho
@@ -112,6 +114,6 @@
         echo "Échec de la connexion à la base de données : " . $e->getMessage();
     }
     ?>
-
+    <script src="autocompletationlistpathologie.js"></script>
 </body>
 </html>

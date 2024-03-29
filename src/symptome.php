@@ -6,6 +6,7 @@
     <meta name="description" content="Page symptome">
     <meta name="author" content="BALLEUR, ESMILAIRE, DONIKIAN, DI-MEO">
     <title>Page symptome</title>
+    <link rel="stylesheet" href="style.css">
 
     <link rel="icon" href="../ressources/images/logo.webp" type="image/webp">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -31,8 +32,11 @@
             <div class="col-12">
                 <form action="symptome.php" method="get">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="searchInput" placeholder="Rechercher un symptome" name="recherche_symptome" aria-label="Rechercher un symptome">
-                        <div id="suggestionsBox"></div>
+                        <div class="position-relative">
+                            <input type="text" class="form-control" id="searchInput" placeholder="Rechercher un symptome" name="recherche_symptome" aria-label="Rechercher un symptome" autocomplete="off">
+                            <div id="suggestionsBox" class="dropdown-menu" style="display: none;"></div>
+                        </div>
+
                         <!-- Dropdown for meridian -->
                         <select name="meridien" class="form-select">
                             <option value="">Select Meridian</option>
@@ -49,7 +53,7 @@
                             }
                             ?>
                         </select>
-                        <button class="btn btn-outline-secondary" type="submit">Filter</button>
+                        <button class="btn btn-outline-secondary" type="submit">Recherche</button>
                     </div>
                 </form>
             </div>
@@ -131,10 +135,7 @@
             echo "Échec de la connexion à la base de données : " . $e->getMessage();
         }
         ?>
-
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
+    <script src="autocompletationlistsymptome.js"></script>
 </body>
 </html>
