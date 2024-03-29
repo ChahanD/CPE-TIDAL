@@ -1,11 +1,21 @@
-
 .position-relative {
-    position: relative;
     width: 50%;
+}
+
+#search-input-patho {
+    width: 32% !important;
 }
 
 #suggestionsBox {
     position: absolute;
     width: 100%;
-    z-index: 999;
+}
+
+#suggestionsBoxPathologie {
+    position: absolute;
+    width: 100%;
+}
+
+.input-group .select-symptome {
+    width: 35% !important; /* Ajustez la valeur selon vos besoins */
 }
