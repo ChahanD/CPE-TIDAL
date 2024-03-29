@@ -64,7 +64,25 @@
         <!-- Affichage du Filtre Actif et Bouton de Réinitialisation -->
         <div class="row mb-3">
             <div class="col-10">
-                <p>Filtre actif : <?php echo isset($_GET['meridien']) ? htmlspecialchars($_GET['meridien']) : "Aucun"; ?></p>
+                <?php
+                $meridien_nom = '';
+                if (isset($_GET['meridien'])) {
+                    $meridien_code = htmlspecialchars($_GET['meridien']);
+                    try {
+                        $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
+                        $meridienQuery = $pdo->prepare("SELECT nom FROM meridien WHERE code = :code");
+                        $meridienQuery->bindParam(':code', $meridien_code);
+                        $meridienQuery->execute();
+                        $meridien = $meridienQuery->fetch(PDO::FETCH_ASSOC);
+                        if ($meridien) {
+                            $meridien_nom = htmlspecialchars($meridien['nom']);
+                        }
+                    } catch (PDOException $e) {
+                        echo "Erreur : " . $e->getMessage();
+                    }
+                }
+                ?>
+                <p>Filtre actif : <?php echo isset($meridien_nom) ? $meridien_nom : "Aucun"; ?></p>
             </div>
             <div class="col-2">
                 <a href="symptome.php" class="btn btn-warning">Effacer les filtres</a>
@@ -73,31 +91,27 @@
 
 
 
-<?php
+        <?php
         require_once 'database.php';
 
         try {
             $conn = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $sql = "SELECT * FROM symptome WHERE 1=1";
+            $sql = "SELECT s.* FROM symptome s
+                    LEFT JOIN symptpatho sp ON s.ids = sp.ids
+                    LEFT JOIN patho p ON sp.idp = p.idp
+                    WHERE 1=1";
             $params = [];
 
             if (isset($_GET['recherche_symptome']) && !empty($_GET['recherche_symptome'])) {
-                $sql .= " AND \"desc\" ILIKE ?";
+                $sql .= " AND s.desc ILIKE ?";
                 $params[] = "%" . $_GET['recherche_symptome'] . "%";
             }
-        
+
             if (isset($_GET['meridien']) && !empty($_GET['meridien'])) {
-                $stmt = $pdo->prepare("SELECT s.ids, s.desc FROM symptome s JOIN symptpatho sp ON s.ids = sp.ids JOIN patho p ON sp.idp = p.idp WHERE p.mer = ?");
-                $stmt->execute([$_GET['meridien']]);
-                echo "<table class='table'>";
-                echo "<thead><tr><th>ID Symptôme</th><th>Description</th></tr></thead>";
-                echo "<tbody>";
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    echo "<tr><td>" . htmlspecialchars($row['ids']) . "</td><td>" . htmlspecialchars($row['desc']) . "</td></tr>";
-                }
-                echo "</tbody></table>";
+                $sql .= " AND p.mer = ?";
+                $params[] = $_GET['meridien'];
             }
 
             $stmt_symptome = $conn->prepare($sql);
@@ -117,6 +131,7 @@
             echo "Échec de la connexion à la base de données : " . $e->getMessage();
         }
         ?>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
