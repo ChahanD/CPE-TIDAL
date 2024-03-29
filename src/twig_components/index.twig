@@ -1,10 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.twig' %}
 
 {% block title %}Accueil{% endblock %}
 
 {% block content %}
     {% set navbarColor = app.request.cookies.get('theme') == 'dark' ? 'navbar-dark bg-dark' : 'navbar-light bg-light' %}
-    {% include 'navbar.html.twig' %}
+    {% include 'navbar.twig' %}
 
     <div class="container">
         <div class="row text-center">
@@ -13,6 +13,7 @@
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
             </div>
         </div>
-        <img src="images/scene.webp" alt="Description de l'image" width="1194" height="682" class="mx-auto d-block">
+
+        <img src="../images/scene.webp" alt="Description de l'image" width="1194" height="682" class="mx-auto d-block">
     </div>
 {% endblock %}
