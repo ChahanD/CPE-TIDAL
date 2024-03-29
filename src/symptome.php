@@ -87,7 +87,7 @@
             $stmt_symptome->execute($params);
 
             echo "<table border='1' class='table table-striped'>";
-            echo "<tr><th>Description</th></tr>";
+            echo "<tr><th>Liste des symptomes</th></tr>";
 
             while ($row_symptome = $stmt_symptome->fetch(PDO::FETCH_ASSOC)) {
                 echo "<tr>";

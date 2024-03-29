@@ -34,7 +34,8 @@
             <div class="col-12">
                 <form action="pathologie.php" method="get">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Rechercher une pathologie" name="recherche_pathologie" aria-label="Rechercher une pathologie">
+                    <input type="text" class="form-control" placeholder="Rechercher une pathologie" name="recherche_pathologie" aria-label="Rechercher une pathologie">
+                        <?php include 'database.php';?>
                         <select name="symptome" class="form-select">
                             <option value="">Choisir un Symptôme</option>
                             <?php
@@ -54,7 +55,6 @@
                         <select name="meridien" class="form-select">
                             <option value="">Choisir Méridiens</option>
                             <?php
-                            include 'database.php';
                             try {
                                 $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
                                 $meridienQuery = $pdo->query("SELECT code, nom FROM meridien");
@@ -83,21 +83,24 @@ try {
     $conn = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    if (isset($_GET['recherche_patho_desc']) && !empty($_GET['recherche_patho_desc'])) {
-        $stmt_patho_desc = $conn->prepare("SELECT * FROM patho WHERE \"desc\" ILIKE :desc");
-        $stmt_patho_desc->execute(['desc' => '%' . $_GET['recherche_patho_desc'] . '%']);
+    if (isset($_GET['recherche_pathologie']) && !empty($_GET['recherche_pathologie'])) {
+        $stmt_patho_desc = $conn->prepare("SELECT * FROM patho WHERE desc ILIKE :desc");
+        $stmt_patho_desc->execute(['desc' => '%' . $_GET['recherche_pathologie'] . '%']);
+    } elseif (isset($_GET['symptome']) && !empty($_GET['symptome'])) {
+        $stmt_patho_desc = $conn->prepare("SELECT patho.* FROM patho
+                                            INNER JOIN symptpatho ON patho.idp = symptpatho.idp
+                                            WHERE symptpatho.ids = :symptome");
+        $stmt_patho_desc->execute(['symptome' => $_GET['symptome']]);
     } else {
         $stmt_patho_desc = $conn->query("SELECT * FROM patho");
     }
 
     // Afficher les résultats des pathologies ici
     echo "<table border='1' class='table table-striped'>";
-    echo "<tr><th>Méridien</th><th>Type</th><th>Description</th></tr>";
+    echo "<tr><th>Liste des pathologies</th></tr>";
 
     while ($row_patho_desc = $stmt_patho_desc->fetch(PDO::FETCH_ASSOC)) {
         echo "<tr>";
-        echo "<td>" . htmlspecialchars($row_patho_desc['mer'], ENT_QUOTES, 'UTF-8') . "</td>";
-        echo "<td>" . htmlspecialchars($row_patho_desc['type'], ENT_QUOTES, 'UTF-8') . "</td>";
         echo "<td>" . htmlspecialchars($row_patho_desc['desc'], ENT_QUOTES, 'UTF-8') . "</td>";
         echo "</tr>";
     }
