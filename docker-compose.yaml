@@ -6,7 +6,6 @@ services:
       dockerfile: conf/php/Dockerfile
     restart: on-failure
     ports:
-      - 50180:80
     environment: 
       DB_HOST: postgres
       DB_USER: ${POSTGRES_PHP_USER}
@@ -35,7 +34,6 @@ services:
     image: dpage/pgadmin4
     restart: on-failure
     ports:
-      - 50181:80
     environment:
       PGADMIN_DEFAULT_EMAIL: test@test.test
       PGADMIN_DEFAULT_PASSWORD: testtest
