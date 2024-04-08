@@ -3,7 +3,7 @@
         'name' => 'theacubro/twig',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '257618f3b3c4c68d4d319ae156006b824baaf00d',
+        'reference' => '3551bc461fb1b55d290f2c448d5c300eb99a8476',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -40,7 +40,7 @@
         'theacubro/twig' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '257618f3b3c4c68d4d319ae156006b824baaf00d',
+            'reference' => '3551bc461fb1b55d290f2c448d5c300eb99a8476',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
