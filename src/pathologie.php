@@ -39,7 +39,7 @@
                 <form action="pathologie.php" method="get">
                     <div class="input-group mb-3">
                         <div id= "search-input-patho" class="position-relative">
-                            <input type="text" class="form-control" id="searchInputPathologie" placeholder="Rechercher une pathologie" name="recherche_pathologie" aria-label="Rechercher une pathologie" autocomplete="off">
+                            <input type="text" class="form-control" id="searchInputPathologie" placeholder="Rechercher une pathologie" name="recherche_pathologie" aria-label="Rechercher une pathologie" autocomplete="off" style="border-radius: 0">
                             <div id="suggestionsBoxPathologie" class="dropdown-menu" style="display: none;"></div>
                         </div>
                         <?php include 'database.php';?>
