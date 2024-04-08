@@ -18,6 +18,10 @@
                     <li class="nav-item">
                         <a class="nav-link" href="authentification.php">Authentification</a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="rendez-vous.php">Prendre un rendez-vous</a>
+                    </li>
                 </ul>
             </div>
         </div>
