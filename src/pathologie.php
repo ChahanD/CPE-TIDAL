@@ -53,7 +53,7 @@
                                     echo "<option value=\"" . htmlspecialchars($symptome['ids']) . "\">" . htmlspecialchars($symptome['desc']) . "</option>";
                                 }
                             } catch (PDOException $e) {
-                                echo "Erreur : " . $e->getMessage();
+                                echo "Erreur A  : " . $e->getMessage();
                             }
                             ?>
                         </select>
@@ -69,7 +69,7 @@
                                     echo "<option value=\"" . htmlspecialchars($meridien['code']) . "\">" . htmlspecialchars($meridien['nom']) . "</option>";
                                 }
                             } catch (PDOException $e) {
-                                echo "Erreur : " . $e->getMessage();
+                                echo "Erreur B : " . $e->getMessage();
                             }
                             ?>
                         </select>
@@ -83,30 +83,48 @@
         <div class="row mb-3">
             <div class="col-10">
                 <?php
-                $meridien_nom = '';
-                if (isset($_GET['meridien'])) {
-                    $meridien_code = htmlspecialchars($_GET['meridien']);
+                    $meridien_nom = '';
+                    if (isset($_GET['meridien'])) {
+                        $meridien_code = htmlspecialchars($_GET['meridien']);
+                        try {
+                            $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
+                            $meridienQuery = $pdo->prepare("SELECT nom FROM meridien WHERE code = :code");
+                            $meridienQuery->bindParam(':code', $meridien_code);
+                            $meridienQuery->execute();
+                            $meridien = $meridienQuery->fetch(PDO::FETCH_ASSOC);
+                            if ($meridien) {
+                                $meridien_nom = htmlspecialchars($meridien['nom']);
+                            }
+                        } catch (PDOException $e) {
+                            echo "Erreur C : " . $e->getMessage();
+                        }
+                    }
+                ?>
+                <?php
+                $symptome_nom = '';
+                if (isset($_GET['symptome']) & !empty($_GET['symptome']) ) {
+                    $symptome_code = htmlspecialchars($_GET['symptome']);
                     try {
                         $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
-                        $meridienQuery = $pdo->prepare("SELECT nom FROM meridien WHERE code = :code");
-                        $meridienQuery->bindParam(':code', $meridien_code);
-                        $meridienQuery->execute();
-                        $meridien = $meridienQuery->fetch(PDO::FETCH_ASSOC);
-                        if ($meridien) {
-                            $meridien_nom = htmlspecialchars($meridien['nom']);
+                        $symptomeQuery = $pdo->prepare('SELECT "desc" FROM symptome WHERE ids = :code');
+                        $symptomeQuery->bindParam(':code', $symptome_code);
+                        $symptomeQuery->execute();
+                        $symptome = $symptomeQuery->fetch(PDO::FETCH_ASSOC);
+                        if ($symptome && isset($symptome['desc'])) {
+                            $symptome_nom = htmlspecialchars($symptome['desc']);
                         }
                     } catch (PDOException $e) {
-                        echo "Erreur : " . $e->getMessage();
+                        echo "Erreur D : " . $e->getMessage();
                     }
                 }
                 ?>
-                <p>Filtre actif : <?php echo isset($meridien_nom) ? $meridien_nom : "Aucun"; ?></p>
+                <p>Filtres actifs : <?php echo isset($meridien_nom) ? $meridien_nom : ""; ?> <?php echo isset($symptome_nom) ? $symptome_nom : ""; ?></p>
             </div>
+            
             <div class="col-2">
                 <a href="pathologie.php" class="btn btn-warning">Effacer les filtres</a>
             </div>
         </div>
-
         <?php
         require_once 'database.php';
 
@@ -124,17 +142,18 @@
 
             if (isset($_GET['symptome']) && !empty($_GET['symptome'])) {
                 $sql .= " AND idp IN (SELECT idp FROM symptpatho WHERE ids = ?)";
-                $params[] = $_GET['symptome'];
+                $params[] = (int) $_GET['symptome']; // Conversion en entier
             }
-
+            
             if (isset($_GET['meridien']) && !empty($_GET['meridien'])) {
                 $sql .= " AND mer = ?";
                 $params[] = $_GET['meridien'];
             }
-
+            
+            // Exécution de la requête avec les paramètres
             $stmt_patho_desc = $conn->prepare($sql);
             $stmt_patho_desc->execute($params);
-
+            
             echo "<table border='1' class='table table-striped'>";
             echo "<tr><th>Liste des pathologies</th></tr>";
 
@@ -149,6 +168,9 @@
             echo "Échec de la connexion à la base de données : " . $e->getMessage();
         }
         ?>
+
+
+
     </div>
     <script src="autocompletationlistpathologie.js"></script>
 </body>

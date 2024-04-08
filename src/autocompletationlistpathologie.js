@@ -29,3 +29,4 @@ document.getElementById('suggestionsBoxPathologie').addEventListener('click', fu
         document.getElementById('suggestionsBoxPathologie').style.display = 'none';
     }
 });
+
