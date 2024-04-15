@@ -1,11 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Accueil{% endblock %}
+{% block description %}Page d'accueil{% endblock %}
 
 {% block content %}
-    {% set navbarColor = app.request.cookies.get('theme') == 'dark' ? 'navbar-dark bg-dark' : 'navbar-light bg-light' %}
-    {% include 'navbar.html.twig' %}
-
     <div class="container">
         <div class="row text-center">
             <div class="col-12">
