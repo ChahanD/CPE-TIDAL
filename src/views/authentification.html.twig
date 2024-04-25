@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Authentification{% endblock %}
+{% block description %}Page d'authentication{% endblock %}
+
+{% block content %}
+    <div class="container d-flex flex-column justify-content-center align-items-center">
+        <h2 class="mt-5">Authentifiez vous !</h2>
+
+        <div class="accordion w-50 my-3" id="authenticationAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="loginHeading">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#loginCollapse" aria-expanded="true" aria-controls="loginCollapse">
+                        Se connecter
+                    </button>
+                </h2>
+
+                <div id="loginCollapse" class="accordion-collapse collapse show m-3" aria-labelledby="loginHeading" data-bs-parent="#authenticationAccordion">
+                    <form id="accordion-body login-form" action="/login" method="POST">
+                        <div class="form-group">
+                            <label for="username">Nom d'utilisateur</label>
+                            <input type="text" id="username" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Mot de passe</label>
+                            <input type="password" id="password" class="form-control" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mt-3">Se connecter</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="registerHeading">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#registerCollapse" aria-expanded="false" aria-controls="registerCollapse">
+                        Créer un compte
+                    </button>
+                </h2>
+        
+                <div id="registerCollapse" class="accordion-collapse collapse m-3" aria-labelledby="registerHeading" data-bs-parent="#authenticationAccordion">
+                    <form id="accordion-body register-form">
+
+                        <div class="form-group">
+                            <label for="new-username">Nom d'utilisateur</label>
+                            <input type="text" id="new-username" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="new-password">Mot de passe</label>
+                            <input type="password" id="new-password" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirm-password">Confirmer le mot de passe</label>
+                            <input type="password" id="confirm-password" class="form-control" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mt-3">Créer un compte</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

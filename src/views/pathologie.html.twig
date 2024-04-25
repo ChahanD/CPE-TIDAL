@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+{% block description %}Page de recherche des pathologies{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-12">
+                <h1>Recherche de pathologies</h1>
+            </div>
+        </div>
+
+        <!-- Filter and Search Form -->
+        <div class="row my-4">
+            <div class="col-12">
+                <form action="pathologie.php" method="get">
+                    <div class="input-group mb-3">
+                        <div id= "search-input-patho" class="position-relative">
+                            <input type="text" class="form-control" id="searchInputPathologie" placeholder="Rechercher une pathologie" name="recherche_pathologie" aria-label="Rechercher une pathologie" autocomplete="off" style="border-radius: 0">
+                            <div id="suggestionsBoxPathologie" class="dropdown-menu" style="display: none;"></div>
+                        </div>
+
+                        <select name="symptome" class="form-select select-symptome">
+                            <option value="">Choisir un Symptôme</option>
+                            {% for symptome in symptomes %}
+                                <option value="{{ symptome.ids }}"> {{ symptome.desc }}</option>;
+                            {% endfor %}
+                        </select>
+
+                        <!-- Dropdown for meridian -->
+                        <select name="meridien" class="form-select">
+                            <option value="">Choisir Méridiens</option>
+                            {% for meridien in meridiens %}
+                                <option value="{{ meridien.code }}">{{ meridien.nom }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <button class="btn btn-outline-secondary" type="submit">Recherche</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Affichage du Filtre Actif et Bouton de Réinitialisation -->
+        <div class="row mb-3">
+            <div class="col-10">
+                <p>Filtres actifs : {{ meridien_nom|default('') }} - {{ symptome_nom|default('') }}</p>
+            </div>
+
+            <div class="col-2">
+                <a href="pathologie.php" class="btn btn-warning">Effacer les filtres</a>
+            </div>
+        </div>
+
+        <table border='1' class='table table-striped'>
+            <tr><th>Liste des pathologies</th></tr>
+            {% for pathologie in pathologies %}
+                <tr>
+                    <td>{{ pathologie.desc|e('html_attr') }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <script src="autocompletationlistpathologie.js"></script>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Rendez-vous{% endblock %}
+{% block description %}Prendre un rendez-vous{% endblock %}
+
+{% block content %}
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.js'></script>
+
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-12">
+                <h1>Prendre un rendez-vous</h1>
+                <p>N'hésitez pas à prendre un rendez-vous avec un spécialiste</p>
+
+                <div id='calendar'></div>
+            </div>
+        </div>
+
+        <form id="appointment-form" style="display: none;">
+            <div class="row">
+                <div class="col-12">
+                    <h2>Confirmer votre rendez-vous</h2>
+                    <p>Date et heure : <span id="appointment-date-time"></span></p>
+                    <button type="submit" class="btn btn-primary">Confirmer</button>
+                    <button type="button" class="btn btn-secondary" id="cancel-appointment">Annuler</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src='../rendez-vous.js'></script>
+{% endblock %}

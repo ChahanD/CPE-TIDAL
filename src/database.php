@@ -25,4 +25,4 @@ function rechercherPathologie($conn, $recherche)
     $stmt->execute(["%$recherche%"]);
     return $stmt;
 }
-
+?>

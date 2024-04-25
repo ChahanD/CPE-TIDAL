@@ -1,177 +1,84 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Page pathologies">
-    <meta name="author" content="BALLEUR, ESMILAIRE, DONIKIAN, DI-MEO">
-    <title>Page pathologies</title>
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="../ressources/images/logo.webp" type="image/webp">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <style>
-        /* Ajoutez cette classe CSS pour réduire la largeur du sélecteur de méridiens */
-        .select-meridien {
-            width: 200px; /* Ajustez la valeur selon vos besoins */
+require_once __DIR__ . '/vendor/autoload.php';
+include 'database.php';
+
+$loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/views');
+$twig = new \Twig\Environment($loader);
+
+try {
+    $conn = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
+
+    // Fetch symptomes
+    $symptomes = null;
+    $symptomeQuery = $conn->query('SELECT ids, "desc" FROM symptome');
+    $symptomes = $symptomeQuery->fetchAll(PDO::FETCH_ASSOC);
+
+    // Fetch meridiens
+    $meridiens = null;
+    $meridienQuery = $conn->query("SELECT code, nom FROM meridien");
+    $meridiens = $meridienQuery->fetchAll(PDO::FETCH_ASSOC);
+
+    // Fetch meridien nom
+    $meridien_nom = '';
+    if (isset($_GET['meridien']) && !empty($_GET['meridien'])) {
+        $meridien_code = $_GET['meridien'];
+        $meridienQuery = $conn->prepare("SELECT nom FROM meridien WHERE code = :code");
+        $meridienQuery->execute([':code' => $meridien_code]);
+        $meridien_nom = $meridienQuery->fetch(PDO::FETCH_ASSOC);
+        $meridien_nom = $meridien_nom["nom"];
+    }
+
+    // Fetch symptome nom
+    $symptome_nom = '';
+    if (isset($_GET['symptome']) && !empty($_GET['symptome'])) {
+        $symptome_code = $_GET['symptome'];
+        $symptomeQuery = $conn->prepare('SELECT "desc" FROM symptome WHERE ids = :code');
+        $symptomeQuery->execute([':code' => $symptome_code]);
+        $symptome_nom = $symptomeQuery->fetch(PDO::FETCH_ASSOC);
+        if ($symptome_nom && isset($symptome_nom['desc'])) {
+            $symptome_nom = $symptome_nom['desc'];
         }
-    </style>   
-</head>
+    }
 
-<body>
-    <header>
-        <div class="text-center my-4">
-            <a href="index.php" class="btn btn-primary">Retour à l'accueil</a>
-            <a href="symptome.php" class="btn btn-primary">Retour aux symptômes</a>
-        </div>
-    </header>
+    // Fetch pathologies
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    <div class="container">
-        <div class="row text-center">
-            <div class="col-12">
-                <h1>Recherche de pathologies</h1>
-            </div>
-        </div>
+    $sql = "SELECT * FROM patho WHERE 1=1";
+    $params = [];
 
-        <!-- Filter and Search Form -->
-        <div class="row my-4">
-            <div class="col-12">
-                <form action="pathologie.php" method="get">
-                    <div class="input-group mb-3">
-                        <div id= "search-input-patho" class="position-relative">
-                            <input type="text" class="form-control" id="searchInputPathologie" placeholder="Rechercher une pathologie" name="recherche_pathologie" aria-label="Rechercher une pathologie" autocomplete="off" style="border-radius: 0">
-                            <div id="suggestionsBoxPathologie" class="dropdown-menu" style="display: none;"></div>
-                        </div>
-                        <?php include 'database.php';?>
-                        <select name="symptome" class="form-select select-symptome">
-                            <option value="">Choisir un Symptôme</option>
-                            <?php
-                            try {
-                                $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
-                                $symptomeQuery = $pdo->query('SELECT ids, "desc" FROM symptome');
-                                while ($symptome = $symptomeQuery->fetch(PDO::FETCH_ASSOC)) {
-                                    echo "<option value=\"" . htmlspecialchars($symptome['ids']) . "\">" . htmlspecialchars($symptome['desc']) . "</option>";
-                                }
-                            } catch (PDOException $e) {
-                                echo "Erreur A  : " . $e->getMessage();
-                            }
-                            ?>
-                        </select>
+    if (isset($_GET['recherche_pathologie']) && !empty($_GET['recherche_pathologie'])) {
+        $sql .= " AND \"desc\" ILIKE ?";
+        $params[] = "%" . $_GET['recherche_pathologie'] . "%";
+    }
 
-                        <!-- Dropdown for meridian -->
-                        <select name="meridien" class="form-select">
-                            <option value="">Choisir Méridiens</option>
-                            <?php
-                            try {
-                                $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
-                                $meridienQuery = $pdo->query("SELECT code, nom FROM meridien");
-                                while ($meridien = $meridienQuery->fetch(PDO::FETCH_ASSOC)) {
-                                    echo "<option value=\"" . htmlspecialchars($meridien['code']) . "\">" . htmlspecialchars($meridien['nom']) . "</option>";
-                                }
-                            } catch (PDOException $e) {
-                                echo "Erreur B : " . $e->getMessage();
-                            }
-                            ?>
-                        </select>
-                        <button class="btn btn-outline-secondary" type="submit">Recherche</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+    if (isset($_GET['symptome']) && !empty($_GET['symptome'])) {
+        $sql .= " AND idp IN (SELECT idp FROM symptpatho WHERE ids = ?)";
+        $params[] = (int) $_GET['symptome'];
+    }
 
-        <!-- Affichage du Filtre Actif et Bouton de Réinitialisation -->
-        <div class="row mb-3">
-            <div class="col-10">
-                <?php
-                    $meridien_nom = '';
-                    if (isset($_GET['meridien'])) {
-                        $meridien_code = htmlspecialchars($_GET['meridien']);
-                        try {
-                            $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
-                            $meridienQuery = $pdo->prepare("SELECT nom FROM meridien WHERE code = :code");
-                            $meridienQuery->bindParam(':code', $meridien_code);
-                            $meridienQuery->execute();
-                            $meridien = $meridienQuery->fetch(PDO::FETCH_ASSOC);
-                            if ($meridien) {
-                                $meridien_nom = htmlspecialchars($meridien['nom']);
-                            }
-                        } catch (PDOException $e) {
-                            echo "Erreur C : " . $e->getMessage();
-                        }
-                    }
-                ?>
-                <?php
-                $symptome_nom = '';
-                if (isset($_GET['symptome']) & !empty($_GET['symptome']) ) {
-                    $symptome_code = htmlspecialchars($_GET['symptome']);
-                    try {
-                        $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
-                        $symptomeQuery = $pdo->prepare('SELECT "desc" FROM symptome WHERE ids = :code');
-                        $symptomeQuery->bindParam(':code', $symptome_code);
-                        $symptomeQuery->execute();
-                        $symptome = $symptomeQuery->fetch(PDO::FETCH_ASSOC);
-                        if ($symptome && isset($symptome['desc'])) {
-                            $symptome_nom = htmlspecialchars($symptome['desc']);
-                        }
-                    } catch (PDOException $e) {
-                        echo "Erreur D : " . $e->getMessage();
-                    }
-                }
-                ?>
-                <p>Filtres actifs : <?php echo isset($meridien_nom) ? $meridien_nom : ""; ?> <?php echo isset($symptome_nom) ? $symptome_nom : ""; ?></p>
-            </div>
-            
-            <div class="col-2">
-                <a href="pathologie.php" class="btn btn-warning">Effacer les filtres</a>
-            </div>
-        </div>
-        <?php
-        require_once 'database.php';
+    if (isset($_GET['meridien']) && !empty($_GET['meridien'])) {
+        $sql .= " AND mer = ?";
+        $params[] = $_GET['meridien'];
+    }
 
-        try {
-            $conn = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $stmt_pathologie = $conn->prepare($sql);
+    $stmt_pathologie->execute($params);
 
-            $sql = "SELECT * FROM patho WHERE 1=1";
-            $params = [];
+    $pathologies = $stmt_pathologie->fetchAll(PDO::FETCH_ASSOC);
 
-            if (isset($_GET['recherche_pathologie']) && !empty($_GET['recherche_pathologie'])) {
-                $sql .= " AND \"desc\" ILIKE ?";
-                $params[] = "%" . $_GET['recherche_pathologie'] . "%";
-            }
-
-            if (isset($_GET['symptome']) && !empty($_GET['symptome'])) {
-                $sql .= " AND idp IN (SELECT idp FROM symptpatho WHERE ids = ?)";
-                $params[] = (int) $_GET['symptome']; // Conversion en entier
-            }
-            
-            if (isset($_GET['meridien']) && !empty($_GET['meridien'])) {
-                $sql .= " AND mer = ?";
-                $params[] = $_GET['meridien'];
-            }
-            
-            // Exécution de la requête avec les paramètres
-            $stmt_patho_desc = $conn->prepare($sql);
-            $stmt_patho_desc->execute($params);
-            
-            echo "<table border='1' class='table table-striped'>";
-            echo "<tr><th>Liste des pathologies</th></tr>";
-
-            while ($row_patho_desc = $stmt_patho_desc->fetch(PDO::FETCH_ASSOC)) {
-                echo "<tr>";
-                echo "<td>" . htmlspecialchars($row_patho_desc['desc'], ENT_QUOTES, 'UTF-8') . "</td>";
-                echo "</tr>";
-            }
-            echo "</table>";
-
-        } catch (PDOException $e) {
-            echo "Échec de la connexion à la base de données : " . $e->getMessage();
-        }
-        ?>
-
-
-
-    </div>
-    <script src="autocompletationlistpathologie.js"></script>
-</body>
-</html>
+    // Render template
+    echo $twig->render('pathologie.html.twig', [
+        'symptomes' => $symptomes,
+        'meridiens' => $meridiens,
+        'meridien_nom' => $meridien_nom,
+        'symptome_nom' => $symptome_nom,
+        'pathologies' => $pathologies
+    ]);
+} catch (PDOException $e) {
+    echo "Erreur : " . $e->getMessage();
+}
+?>

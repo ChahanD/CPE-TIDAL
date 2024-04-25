@@ -1,0 +1,17 @@
+{
+    "name": "theacubro/twig",
+    "autoload": {
+        "psr-4": {
+            "Theacubro\\Twig\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "X",
+            "email": "max01smart@gmail.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.0"
+    }
+}

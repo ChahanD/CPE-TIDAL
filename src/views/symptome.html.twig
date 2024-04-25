@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+{% block description %}Page de recherche des symptomes{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-12">
+                <h1>Recherche de symptomes</h1>
+            </div>
+        </div>
+        
+        <!-- Filter and Search Form -->
+        <div class="row my-4">
+            <div class="col-12">
+                <form action="../symptome.php" method="get">
+                    <div class="input-group mb-3">
+                        <div class="position-relative">
+                            <input type="text" class="form-control" id="searchInput" placeholder="Rechercher un symptome" name="recherche_symptome" aria-label="Rechercher un symptome" autocomplete="off" style="border-radius: 0">
+                            <div id="suggestionsBox" class="dropdown-menu" style="display: none;"></div>
+                        </div>
+
+                        <!-- Dropdown for meridian -->
+                        <select name="meridien" class="form-select">
+                            <option value="">Select Meridian</option>
+                            {% for meridien in meridiens %}
+                                <option value="{{ meridien.code }}">{{ meridien.nom }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <button class="btn btn-outline-secondary" type="submit">
+                            Recherche
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Affichage du Filtre Actif et Bouton de Réinitialisation -->
+        <div class="row mb-3">
+            <div class="col-10">
+                <p>Filtre actif : {{ meridien_nom|default('Aucun') }}</p>
+            </div>
+
+            <div class="col-2">
+                <a href="../symptome" class="btn btn-warning">Effacer les filtres</a>
+            </div>
+        </div>
+
+        <table border='1' class='table table-striped'>
+            <tr><th>Liste des symptomes</th></tr>
+            {% for symptome in symptomes %}
+                <tr>
+                    <td>{{ symptome.desc|e('html_attr') }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <script src="autocompletationlistsymptome.js"></script>
+    <link rel="stylesheet" href="./styles/symptome.css">
+{% endblock %}
