@@ -22,12 +22,18 @@
                     <a class="nav-link" href="../symptome.php">Symptômes</a>
                 </li>
             {% endif %}
+
+            {% if currentPage != 'rdv' %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="../rendez-vous.php">Prendre rendez-vous</a>
+                </li>
+            {% endif %}
         </ul>
 
-        {% if currentPage != 'authentication' %}
+        {% if currentPage != 'authentification' %}
             <ul class="navbar-nav ms-auto pe-3">
                 <li class="nav-item active">
-                    <a class="nav-link" href="../authentication.php">Authentification</a>
+                    <a class="nav-link" href="../authentification.php">Authentification</a>
                 </li>
             </ul>
         {% endif %}
