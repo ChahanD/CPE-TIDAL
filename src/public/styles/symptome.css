@@ -3,7 +3,7 @@ html, body {
     font-family: Verdana, sans-serif;
     margin: 0;
     padding: 0;
-    background-image: url('../images/blue.jpg');
+    background-image: url('../images/neutre.jpg');
     background-size: 100%;
     position: relative;
 }
@@ -23,32 +23,32 @@ html, body {
 }
 
 .btn {
-    background-color: #1e1e1e94; /* Couleur de fond */
-    color: white; /* Couleur du texte */
-    padding: 14px; /* Espacement intérieur */
-    margin: 8px 0; /* Marge */
-    border: none; /* Pas de bordure */
-    cursor: pointer; /* Curseur en forme de main */
-    width: 100%; /* Largeur */
-    border-radius: 10px; /* Ajustez cette valeur selon vos préférences */
+    background-color: #1e1e1e94; 
+    color: white;
+    padding: 14px; 
+    margin: 8px 0; 
+    border: none; 
+    cursor: pointer; 
+    width: 100%;
+    border-radius: 10px;
 }
 
 
 .table {
-    width: 100%; /* Largeur */
-    max-width: 100%; /* Largeur maximale */
-    margin-bottom: 1rem; /* Marge inférieure */
+    width: 100%;
+    max-width: 100%; 
+    margin-bottom: 1rem;
 }
 
 .table th, .table td {
-    padding: 0.75rem; /* Espacement intérieur */
-    vertical-align: top; /* Alignement vertical */
-    border-top: 1px solid #dee2e6; /* Bordure supérieure */
+    padding: 0.75rem; 
+    vertical-align: top; 
+    border-top: 1px solid #dee2e6; 
 }
 
 h1, p {
-    color: #333; /* Couleur du texte */
-    font-family: Arial, sans-serif; /* Police de caractères */
+    color: #333;
+    font-family: Arial, sans-serif; 
 }
 
 .input-group {

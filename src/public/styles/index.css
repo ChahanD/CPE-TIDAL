@@ -1,0 +1,26 @@
+html, body {
+    height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('../images/neutre.jpg');
+    background-size: 100%;
+    position: relative;
+}
+
+.text-center {
+    text-align: center;
+    padding-top : 15px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+h1 {
+    border-bottom: 6px solid #b58f70; /* Changez la couleur (#000) comme vous le souhaitez */
+    padding-bottom: 20px; /* Ajoute un peu d'espace entre le texte et la ligne */
+    margin-bottom: 40px;
+}
+
+.small-lead {
+    font-size: 1.15rem;
+}
