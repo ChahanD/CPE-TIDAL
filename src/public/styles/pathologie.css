@@ -1,11 +1,10 @@
-html, body {
+body {
+    background-image: url('../images/blue.jpg');
+    background-size: 100%;
     height: 100%;
     font-family: Verdana, sans-serif;
     margin: 0;
     padding: 0;
-    background-image: url('../images/blue.jpg');
-    background-size: 100%;
-    position: relative;
 }
 
 .text-center {
@@ -16,9 +15,13 @@ html, body {
     margin-top: 50px;
 }
 
+.filter-active {
+    color: #000000;
+}
+
 .mb-3 {
     margin-bottom: 1rem;
-    color: #000000; 
+    color: #000000;
     font-weight: bold;
 }
 
@@ -33,22 +36,28 @@ html, body {
     border-radius: 10px; /* Ajustez cette valeur selon vos préférences */
 }
 
+.btn:hover {
+    opacity: 0.8; /* Transparence au survol */
+}
 
+/* CSS pour modifier l'apparence du texte */
+h1, p {
+    color: #333; /* Couleur du texte */
+    font-family: Arial, sans-serif; /* Police de caractères */
+}
+
+/* CSS pour modifier l'apparence des tableaux */
 .table {
     width: 100%; /* Largeur */
     max-width: 100%; /* Largeur maximale */
     margin-bottom: 1rem; /* Marge inférieure */
 }
 
-.table th, .table td {
+.table th,
+.table td {
     padding: 0.75rem; /* Espacement intérieur */
     vertical-align: top; /* Alignement vertical */
     border-top: 1px solid #dee2e6; /* Bordure supérieure */
-}
-
-h1, p {
-    color: #333; /* Couleur du texte */
-    font-family: Arial, sans-serif; /* Police de caractères */
 }
 
 .input-group {
