@@ -1,6 +1,6 @@
 // Vérification si le mot de passe entré dans le champ "Mot de passe" est le même que celui entré dans le champ "Confirmer le mot de passe"
 
-document.getElementById('accordion-body login-form').addEventListener('submit', function(event) {
+document.getElementById('accordion-body-login-form').addEventListener('submit', function(event) {
     var username = document.getElementById('username').value;
     var password = document.getElementById('password').value;
 
@@ -16,7 +16,7 @@ document.getElementById('accordion-body login-form').addEventListener('submit', 
 // Si tous les champs sont remplis, il vérifie ensuite si le mot de passe et la confirmation du mot de passe sont identiques. Si ce n'est pas le cas, il affiche un message 
 // d'alerte disant "Les mots de passe ne correspondent pas." et arrête également le processus d'envoi du formulaire.
 
-document.getElementById('accordion-body register-form').addEventListener('submit', function(event) {
+document.getElementById('accordion-body-register-form').addEventListener('submit', function(event) {
     var newUsername = document.getElementById('new-username').value;
     var newPassword = document.getElementById('new-password').value;
     var confirmPassword = document.getElementById('confirm-password').value;
