@@ -1,11 +1,11 @@
 <?php
-require_once 'database.php';
+include '../models/database.php';
 
 $searchTerm = $_GET['search'];
 $symptome = [];
 
 try {
-    $conn = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
+    $conn = getDbConnection();
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $stmt = $conn->prepare('SELECT "desc" FROM symptome WHERE "desc" ILIKE :searchTerm LIMIT 10');

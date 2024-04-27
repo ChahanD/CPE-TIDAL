@@ -14,7 +14,7 @@
         <!-- Filter and Search Form -->
         <div class="row my-4">
             <div class="col-12">
-                <form action="../symptome.php" method="get">
+                <form action="../controllers/symptome.php" method="get">
                     <div class="input-group mb-3">
                         <div class="position-relative">
                             <input type="text" class="form-control" id="searchInput" placeholder="Rechercher un symptome" name="recherche_symptome" aria-label="Rechercher un symptome" autocomplete="off" style="border-radius: 0">
@@ -44,7 +44,7 @@
             </div>
 
             <div class="col-2">
-                <a href="../symptome" class="btn btn-warning">Effacer les filtres</a>
+                <a href="./symptome.php" class="btn btn-warning">Effacer les filtres</a>
             </div>
         </div>
 
@@ -58,6 +58,6 @@
         </table>
     </div>
 
-    <script src="autocompletationlistsymptome.js"></script>
-    <link rel="stylesheet" href="./styles/symptome.css">
+    <script src="../public/scripts/autocompletationlistsymptome.js"></script>
+    <link rel="stylesheet" href="../public/styles/symptome.css">
 {% endblock %}

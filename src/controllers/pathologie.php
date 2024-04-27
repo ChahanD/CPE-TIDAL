@@ -3,14 +3,14 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require_once __DIR__ . '/vendor/autoload.php';
-include 'database.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+include '../models/database.php';
 
-$loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/views');
+$loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../views');
 $twig = new \Twig\Environment($loader);
 
 try {
-    $conn = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
+    $conn = getDbConnection();
 
     // Fetch symptomes
     $symptomes = null;
@@ -71,7 +71,7 @@ try {
     $pathologies = $stmt_pathologie->fetchAll(PDO::FETCH_ASSOC);
 
     // Render template
-    echo $twig->render('pathologie.html.twig', [
+    echo $twig->render('./pathologie.html.twig', [
         'symptomes' => $symptomes,
         'meridiens' => $meridiens,
         'meridien_nom' => $meridien_nom,

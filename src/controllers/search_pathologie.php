@@ -1,11 +1,11 @@
 <?php
-require_once 'database.php';
+include '../models/database.php';
 
 $searchTerm = $_GET['search'];
 $pathologies = [];
 
 try {
-    $conn = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
+    $conn = getDbConnection();
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $stmt = $conn->prepare('SELECT "desc" FROM patho WHERE "desc" ILIKE :searchTerm LIMIT 10');
@@ -18,8 +18,8 @@ try {
     echo "Échec de la connexion à la base de données : " . $e->getMessage();
 }
 
-if (!empty($pathologies)) { // Utilisez $pathologies au lieu de $suggestions
-    foreach ($pathologies as $pathology) { // Utilisez $pathologies au lieu de $suggestions
+if (!empty($pathologies)) {
+    foreach ($pathologies as $pathology) {
         echo '<div class="suggestion-item">' . $pathology . '</div>';
     }
 } else {

@@ -1,6 +1,6 @@
 <nav id="navbar" class="navbar navbar-expand {{ navbarColor }}">
-    <a class="navbar-brand ps-3" href="./index.php">
-        <img src="images/logo.webp" width="30" height="30" class="d-inline-block align-top" alt=""/>
+    <a class="navbar-brand ps-3" href="../index.php">
+        <img src="../public/images/logo.webp" width="30" height="30" class="d-inline-block align-top" alt=""/>
     </a>
 
     <div class="collapse navbar-collapse d-flex" id="navbarNav">
@@ -13,19 +13,19 @@
 
             {% if currentPage != 'patho' %}
                 <li class="nav-item active">
-                    <a class="nav-link" href="../pathologie.php">Pathologies</a>
+                    <a class="nav-link" href="../controllers/pathologie.php">Pathologies</a>
                 </li>
             {% endif %}
 
             {% if currentPage != 'sympto' %}
                 <li class="nav-item active">
-                    <a class="nav-link" href="../symptome.php">Symptômes</a>
+                    <a class="nav-link" href="../controllers/symptome.php">Symptômes</a>
                 </li>
             {% endif %}
 
             {% if currentPage != 'rdv' %}
                 <li class="nav-item active">
-                    <a class="nav-link" href="../rendez-vous.php">Prendre rendez-vous</a>
+                    <a class="nav-link" href="../controllers/rendez-vous.php">Prendre rendez-vous</a>
                 </li>
             {% endif %}
         </ul>
@@ -33,7 +33,7 @@
         {% if currentPage != 'authentification' %}
             <ul class="navbar-nav ms-auto pe-3">
                 <li class="nav-item active">
-                    <a class="nav-link" href="../authentification.php">Authentification</a>
+                    <a class="nav-link" href="../controllers/authentification.php">Authentification</a>
                 </li>
             </ul>
         {% endif %}
