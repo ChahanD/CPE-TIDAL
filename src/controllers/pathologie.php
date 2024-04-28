@@ -4,71 +4,54 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 require_once __DIR__ . '/../vendor/autoload.php';
+
 include '../models/database.php';
 
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../views');
 $twig = new \Twig\Environment($loader);
 
+
 try {
-    $conn = getDbConnection();
+    // Get the parameters
+    $params = [
+        'recherche_pathologie' => $_GET['recherche_pathologie'] ?? null,
+        'symptome' => $_GET['symptome'] ?? null,
+        'meridien' => $_GET['meridien'] ?? null,
+        'search' => $_GET['search'] ?? null
+    ];
+
+    // Get the database connection
+    $db = new Database();
 
     // Fetch symptomes
-    $symptomes = null;
-    $symptomeQuery = $conn->query('SELECT ids, "desc" FROM symptome');
-    $symptomes = $symptomeQuery->fetchAll(PDO::FETCH_ASSOC);
+    $symptomes = $db->getSymptomes();
 
     // Fetch meridiens
-    $meridiens = null;
-    $meridienQuery = $conn->query("SELECT code, nom FROM meridien");
-    $meridiens = $meridienQuery->fetchAll(PDO::FETCH_ASSOC);
+    $meridiens = $db->getMeridiens();
 
     // Fetch meridien nom
     $meridien_nom = '';
-    if (isset($_GET['meridien']) && !empty($_GET['meridien'])) {
-        $meridien_code = $_GET['meridien'];
-        $meridienQuery = $conn->prepare("SELECT nom FROM meridien WHERE code = :code");
-        $meridienQuery->execute([':code' => $meridien_code]);
-        $meridien_nom = $meridienQuery->fetch(PDO::FETCH_ASSOC);
-        $meridien_nom = $meridien_nom["nom"];
+    if (isset($params['meridien']) && !empty($params['meridien'])) {
+        $meridien_nom = $db->getMeridienNom($params['meridien']);
     }
 
     // Fetch symptome nom
     $symptome_nom = '';
-    if (isset($_GET['symptome']) && !empty($_GET['symptome'])) {
-        $symptome_code = $_GET['symptome'];
-        $symptomeQuery = $conn->prepare('SELECT "desc" FROM symptome WHERE ids = :code');
-        $symptomeQuery->execute([':code' => $symptome_code]);
-        $symptome_nom = $symptomeQuery->fetch(PDO::FETCH_ASSOC);
-        if ($symptome_nom && isset($symptome_nom['desc'])) {
-            $symptome_nom = $symptome_nom['desc'];
-        }
+    if (isset($params['symptome']) && !empty($params['symptome'])) {
+        $symptome_nom = $db->getSymptomeNom($params['symptome']);
     }
 
     // Fetch pathologies
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pathologies = $db->getListPathologies($params);
 
-    $sql = "SELECT * FROM patho WHERE 1=1";
-    $params = [];
-
-    if (isset($_GET['recherche_pathologie']) && !empty($_GET['recherche_pathologie'])) {
-        $sql .= " AND \"desc\" ILIKE ?";
-        $params[] = "%" . $_GET['recherche_pathologie'] . "%";
+    // Fetch autocompletation list
+    $autocompletation_list = [];
+    if (isset($params['search']) && !empty($params['search'])) {
+        $autocompletation_list = $db->getListAutocompletation($params['search'], "patho");
+        header('Content-Type: application/json');
+        echo json_encode($autocompletation_list);
+        exit;
     }
-
-    if (isset($_GET['symptome']) && !empty($_GET['symptome'])) {
-        $sql .= " AND idp IN (SELECT idp FROM symptpatho WHERE ids = ?)";
-        $params[] = (int) $_GET['symptome'];
-    }
-
-    if (isset($_GET['meridien']) && !empty($_GET['meridien'])) {
-        $sql .= " AND mer = ?";
-        $params[] = $_GET['meridien'];
-    }
-
-    $stmt_pathologie = $conn->prepare($sql);
-    $stmt_pathologie->execute($params);
-
-    $pathologies = $stmt_pathologie->fetchAll(PDO::FETCH_ASSOC);
 
     // Render template
     echo $twig->render('./pathologie.html.twig', [

@@ -17,8 +17,8 @@
                 <form action="../controllers/pathologie.php" method="get">
                     <div class="input-group mb-3">
                         <div id= "search-input-patho" class="position-relative">
-                            <input type="text" class="form-control" id="searchInputPathologie" placeholder="Rechercher une pathologie" name="recherche_pathologie" aria-label="Rechercher une pathologie" autocomplete="off" style="border-radius: 0">
-                            <div id="suggestionsBoxPathologie" class="dropdown-menu" style="display: none;"></div>
+                            <input type="text" class="form-control" id="searchInput" placeholder="Rechercher une pathologie" name="recherche_pathologie" aria-label="Rechercher une pathologie" autocomplete="off" style="border-radius: 0" data-fetch-page="pathologie.php">
+                            <div id="suggestionsBox" class="dropdown-menu" style="display: none;"></div>
                         </div>
 
                         <select name="symptome" class="form-select select-symptome">
@@ -46,7 +46,7 @@
         <!-- Affichage du Filtre Actif et Bouton de Réinitialisation -->
         <div class="row mb-3">
             <div class="col-10">
-                <p>Filtres actifs : {{ symptome_nom|default('') }} - {{ meridien_nom|default('') }}</p>
+                <p>Filtres actifs : {{ symptome_nom|default('Aucun') }} - {{ meridien_nom|default('Aucun') }}</p>
             </div>
 
             <div class="col-2">
@@ -64,6 +64,6 @@
         </table>
     </div>
 
-    <script src="../public/scripts/autocompletationlistpathologie.js"></script>
+    <script src="../public/scripts/autocompletation.js"></script>
     <link rel="stylesheet" href="../public/styles/pathologie.css">
 {% endblock %}

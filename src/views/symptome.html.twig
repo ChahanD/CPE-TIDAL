@@ -17,7 +17,7 @@
                 <form action="../controllers/symptome.php" method="get">
                     <div class="input-group mb-3">
                         <div class="position-relative">
-                            <input type="text" class="form-control" id="searchInput" placeholder="Rechercher un symptome" name="recherche_symptome" aria-label="Rechercher un symptome" autocomplete="off" style="border-radius: 0">
+                            <input type="text" class="form-control" id="searchInput" placeholder="Rechercher un symptome" name="recherche_symptome" aria-label="Rechercher un symptome" autocomplete="off" style="border-radius: 0" data-fetch-page="symptome.php">
                             <div id="suggestionsBox" class="dropdown-menu" style="display: none;"></div>
                         </div>
 
@@ -29,6 +29,7 @@
                             {% endfor %}
                         </select>
                     </div>
+
                     <button class="btn btn-outline-secondary" type="submit">
                             Recherche
                     </button>
@@ -57,6 +58,6 @@
         </table>
     </div>
 
-    <script src="../public/scripts/autocompletationlistsymptome.js"></script>
+    <script src="../public/scripts/autocompletation.js"></script>
     <link rel="stylesheet" href="../public/styles/symptome.css">
 {% endblock %}

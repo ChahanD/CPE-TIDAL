@@ -1,13 +1,17 @@
 document.getElementById('searchInput').addEventListener('input', function() {
     let searchTerm = this.value;
+    let pageToFetch = this.dataset.fetchPage;
 
     if (searchTerm.length >= 2) {
-        fetch('search_symptome.php?search=' + encodeURIComponent(searchTerm))
-            .then(response => response.text())
+        fetch(`${pageToFetch}?search=` + encodeURIComponent(searchTerm))
+            .then(response => response.json())
             .then(data => {
-                document.getElementById('suggestionsBox').innerHTML = data;
-                document.getElementById('suggestionsBox').classList.add('show');
-                document.getElementById('suggestionsBox').style.display = 'block';
+                let suggestionsBox = document.getElementById('suggestionsBox');
+                suggestionsBox.innerHTML = data.map(
+                    item => `<div class="suggestion-item">${item}</div>`
+                ).join('');
+                suggestionsBox.classList.add('show');
+                suggestionsBox.style.display = 'block';
             });
     } else {
         document.getElementById('suggestionsBox').classList.remove('show');
