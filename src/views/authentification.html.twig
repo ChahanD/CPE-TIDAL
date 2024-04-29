@@ -31,7 +31,7 @@
                 </h2>
 
                 <div id="loginCollapse" class="accordion-collapse collapse show m-3" aria-labelledby="loginHeading" data-bs-parent="#authenticationAccordion">
-                    <form id="accordion-body-login-form" action="../controllers/authentification.php" method="POST">
+                    <form id="accordion-body-login-form" action="/auth" method="POST">
                         <div class="form-group">
                             <label for="username">Nom d'utilisateur</label>
                             <input type="text" id="username" name="username" class="form-control" required>
@@ -56,7 +56,7 @@
                 </h2>
 
                 <div id="registerCollapse" class="accordion-collapse collapse m-3" aria-labelledby="registerHeading" data-bs-parent="#authenticationAccordion">
-                    <form id="accordion-body-register-form" action="../controllers/authentification.php" method="POST">
+                    <form id="accordion-body-register-form" action="/auth" method="POST">
                         <div class="form-group">
                             <label for="new-username">Nom d'utilisateur</label>
                             <input type="text" id="new-username" name="new-username" class="form-control" required>

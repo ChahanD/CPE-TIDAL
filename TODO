@@ -1,13 +1,1 @@
-
-- faire l'api rest
-- mettre en place le système de login + persistance de la session 
-- Vous implémenterez une fonctionnalité de recherche de pathologie par mot–clef. Les mot–clefs sont associés aux symptômes dans la base de connaissance. Cette fonctionnalité ne sera accessible qu’aux utilisateurs authentifiés
-
-- faire l'emploi du temps ?.. #BONUS
-
-- faire un README et citer les sources + webographie #README.md
-
-- afficher les détails d’une pathologie ainsi que la liste de symptômes qui lui sont liés
-
-- Corriger le CSS de chaques pages
-- vérifier le respect des consignes
+- finir le README et citer les sources + webographi

@@ -5,7 +5,6 @@ error_reporting(E_ALL);
 
 
 require_once __DIR__ . '/../vendor/autoload.php';
-include __DIR__ . '/../models/database.php';
 
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../views');
 $twig = new \Twig\Environment($loader);
@@ -19,8 +18,8 @@ if (!isset($_COOKIE['user_id'])) {
 }
 
 // Render template
-echo $twig->render('./rendez-vous.html.twig', [
-    'currentPage' => 'rdv',
+echo $twig->render('./home.html.twig', [
+    'currentPage' => 'index',
     'userconnected' => $is_user_connected
 ]);
 ?>

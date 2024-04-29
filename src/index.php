@@ -1,15 +1,28 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+$request = $_SERVER['REQUEST_URI'];
 
+// Parse the URL and return the path
+$path = parse_url($request, PHP_URL_PATH);
 
-require_once __DIR__ . '/vendor/autoload.php';
-
-$loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/views');
-$twig = new \Twig\Environment($loader);
-
-
-// Render template
-echo $twig->render('./index.html.twig', ['currentPage' => 'index']);
+// Switch the path and require the right controller
+switch ($path) {
+    case '/patho' :
+        require __DIR__ . '/controllers/pathologie.php';
+        break;
+    case '/rdv' :
+        require __DIR__ . '/controllers/rendez-vous.php';
+        break;
+    case '/sympto' :
+        require __DIR__ . '/controllers/symptome.php';
+        break;
+    case '/auth' :
+        require __DIR__ . '/controllers/authentification.php';
+        break;
+    case '/api' :
+        require __DIR__ . '/api/getdiseases.php';
+        break;
+    default:
+        require __DIR__ . '/controllers/home.php';
+        break;
+}
 ?>

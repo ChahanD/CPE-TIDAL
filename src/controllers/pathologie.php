@@ -5,8 +5,7 @@ error_reporting(E_ALL);
 
 
 require_once __DIR__ . '/../vendor/autoload.php';
-
-include '../models/database.php';
+include __DIR__ . '/../models/database.php';
 
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../views');
 $twig = new \Twig\Environment($loader);
