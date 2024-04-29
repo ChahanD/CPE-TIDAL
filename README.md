@@ -1,6 +1,7 @@
 # Projet Tidal - The Acu Bros
 
 Ce projet est une application web d'acupuncture traditionnelle. Il a été développé par l'équipe The Acu Bros dans le cadre du cours de Projet Tidal à CPE Lyon.
+
 ***lien vers notre GitHub:***
 https://github.com/cpe-lyon/projet-tidal-theacu-bros
 
@@ -16,33 +17,43 @@ docker-compose up -d --build`
 Une fois que l'application est en cours d'exécution, vous pouvez y accéder en ouvrant votre navigateur web et en naviguant vers http://localhost:50180
 
 ## Structure du code
-
-Le code de l'application est structuré en plusieurs parties :
-
-- src/controllers/ : Contient les contrôleurs PHP pour les différentes pages de l'application.
-  - `authentification.php` : Gère l'authentification des utilisateurs.
-  - `pathologie.php` : Gère l'affichage des pathologies.
-  - `rendez-vous.php` : Gère l'affichage des rendez-vous.
-  - `search_pathologie.php` : Gère la recherche de pathologies.
-  - `search_symptome.php` : Gère la recherche de symptômes.
-  - `symptome.php` : Gère l'affichage des symptômes.
-Chacun de ces fichiers utilise le modèle de base de données défini dans database.php pour interagir avec la base de données.
-- `src/models/` : Contient le modèle de base de données.
-  - `database.php` : Fournit les fonctions pour interagir avec la base de données.
-
-- `src/views/` : Contient les templates Twig pour les différentes pages de l'application.
-  - `home.twig` : Template pour la page d'accueil.
-  - `login.twig` : Template pour la page de connexion.
-  - `register.twig` : Template pour la page d'inscription.
-  - `search.twig` : Template pour la page de recherche.
-
-- `src/public/` : Contient les fichiers statiques publics.
-  - `images/` : Contient les images utilisées dans l'application.
-  - `styles/` : Contient les fichiers CSS pour le style de l'application.
-
-- `scripts/` : Contient les scripts JavaScript pour l'application.
-  - `authentification.js` : Gère l'authentification des utilisateurs.
-  - `search.js` : Gère la recherche de pathologies et de symptômes.
+```
+src/
+├── api/
+│   ├── getdiseases.php
+│   └── getusers.php
+├── controllers/
+│   ├── authentification.php
+│   ├── pathologie.php
+│   ├── rendez-vous.php
+│   └── symptome.php
+├── index.php
+├── models/
+│   └── database.php
+├── public/
+│   ├── images/
+│   ├── scripts/
+│   └── styles/
+├── vendor/
+│   └── autoload.php
+└── views/
+    ├── authentification.twig
+    ├── base.twig
+    ├── footer.twig
+    ├── header.twig
+    ├── index.twig
+    ├── pathologie.twig
+    ├── rendez-vous.twig
+    └── symptome.twig
+```
+Explication des fichiers: 
+- `api/` contient les fichiers PHP qui servent à récupérer les données de la base de données.
+- `controllers/` contient les fichiers PHP qui servent à gérer les différentes pages de l'application.
+- `index.php` est le point d'entrée de l'application.
+- `models/` contient les fichiers PHP qui servent à gérer la connexion à la base de données.
+- `public/` contient les fichiers statiques (images, scripts, styles) de l'application.
+- `vendor/` contient les dépendances PHP du projet.
+- `views/` contient les fichiers Twig qui servent à générer les pages HTML de l'application.
 
 ## Normes d’accessibilité de niveau AAA.
 
@@ -50,10 +61,10 @@ Nous avons employé le logiciel Nu Html Checker pour assurer la conformité de n
 
 ## Contributors
 L'ensemble du projet à été réalisé par les éleves 4ETI suivants:
-    - Maxime Balleur
-    - Alice Esmilaire
-    - Chahan Donikian
+    - Maxime  Balleur
     - Maxence Di-Meo
+    - Chahan  Donikian
+    - Alice   Esmilaire
 
 ## Webographie
 
@@ -64,3 +75,9 @@ L'ensemble du projet à été réalisé par les éleves 4ETI suivants:
 - https://www.w3schools.com
 - https://openclassrooms.com/fr/
 - https://unsplash.com/fr
+- https://restfulapi.net
+
+FEEDBACK: 
+rest: autocomp
+cookie = cote serveur (fallait faire)
+point d'entrée fichier .php
