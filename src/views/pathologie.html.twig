@@ -4,13 +4,6 @@
 {% block description %}Page_de_recherche_des_pathologies{% endblock %}
 
 {% block content %}
-    <!-- Check if user is connected -->
-    {% if userconnected %}
-        <p>Vous êtes connecté.</p>
-    {% else %}
-        <p>Vous n'êtes pas connecté.</p>
-    {% endif %}
-
     <div class="container">
         <!-- Title -->
         <div class="row text-center">
@@ -22,10 +15,10 @@
         <!-- Search form -->
         <div class="row my-4">
             <div class="col-12">
-                <form action="../controllers/pathologie.php" method="get">
+                <form action="/patho" method="get">
                     <div class="input-group mb-3">
                         <div id= "search-input-patho" class="position-relative">
-                            <input type="text" class="form-control" id="searchInput" placeholder="Rechercher une pathologie" name="recherche_pathologie" aria-label="Rechercher une pathologie" autocomplete="off" style="border-radius: 0" data-fetch-page="pathologie.php">
+                            <input type="text" class="form-control" id="searchInput" placeholder="Rechercher une pathologie" name="recherche_pathologie" aria-label="Rechercher une pathologie" autocomplete="off" style="border-radius: 0" data-fetch-page="patho">
                             <div id="suggestionsBox" class="dropdown-menu" style="display: none;"></div>
                         </div>
 
@@ -56,7 +49,7 @@
             </div>
 
             <div class="col-2">
-                <a href="./pathologie.php" class="btn btn-warning">Effacer les filtres</a>
+                <a href="/patho" class="btn btn-warning">Effacer les filtres</a>
             </div>
         </div>
 

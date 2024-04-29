@@ -5,8 +5,7 @@ error_reporting(E_ALL);
 
 
 require_once __DIR__ . '/../vendor/autoload.php';
-
-include '../models/database.php';
+include __DIR__ . '/../models/database.php';
 
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../views');
 $twig = new \Twig\Environment($loader);
@@ -44,11 +43,19 @@ try {
         exit;
     }
 
+    // Check if user is connected
+    if (!isset($_COOKIE['user_id'])) {
+        $is_user_connected = false;
+    } else {
+        $is_user_connected = true;
+    }
+
     // Render template
     echo $twig->render('./symptome.html.twig', [
         'meridiens' => $meridiens,
         'meridien_nom' => $meridien_nom,
-        'symptomes' => $symptomes
+        'symptomes' => $symptomes,
+        'userconnected' => $is_user_connected
     ]);
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();

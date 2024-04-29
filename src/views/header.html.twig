@@ -1,5 +1,5 @@
 <nav id="navbar" class="navbar navbar-expand {{ navbarColor }}">
-    <a class="navbar-brand ps-3" href="../index.php">
+    <a class="navbar-brand ps-3" href="/">
         <img src="../public/images/logo.webp" width="30" height="30" class="d-inline-block align-top" alt="">
     </a>
 
@@ -7,35 +7,43 @@
         <ul class="navbar-nav">
             {% if currentPage != 'index' %}
                 <li class="nav-item active">
-                    <a class="nav-link" href="../index.php">Accueil</a>
+                    <a class="nav-link" href="/">Accueil</a>
                 </li>
             {% endif %}
 
             {% if currentPage != 'patho' %}
                 <li class="nav-item active">
-                    <a class="nav-link" href="../controllers/pathologie.php">Pathologies</a>
+                    <a class="nav-link" href="/patho">Pathologies</a>
                 </li>
             {% endif %}
 
             {% if currentPage != 'sympto' %}
                 <li class="nav-item active">
-                    <a class="nav-link" href="../controllers/symptome.php">Symptômes</a>
+                    <a class="nav-link" href="/sympto">Symptômes</a>
                 </li>
             {% endif %}
 
             {% if currentPage != 'rdv' %}
                 <li class="nav-item active">
-                    <a class="nav-link" href="../controllers/rendez-vous.php">Prendre rendez-vous</a>
+                    <a class="nav-link" href="/rdv">Prendre rendez-vous</a>
                 </li>
             {% endif %}
         </ul>
 
-        {% if currentPage != 'authentification' %}
+        {% if currentPage != 'authentification' and not userconnected %}
             <ul class="navbar-nav ms-auto pe-3">
                 <li class="nav-item active">
-                    <a class="nav-link" href="../controllers/authentification.php">Authentification</a>
+                    <a class="nav-link" href="/auth">Authentification</a>
                 </li>
             </ul>
+        {% else %}
+            {% if userconnected %}
+                <ul class="navbar-nav ms-auto pe-3">
+                    <li class="nav-item active">
+                        <p class="nav-link">Connecté</p>
+                    </li>
+                </ul>
+            {% endif %}
         {% endif %}
     </div>
 </nav>

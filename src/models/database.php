@@ -215,5 +215,16 @@ class Database {
         $query->execute([':id' => $id]);
         return $query->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function executeQuery($sql, $params) {
+        /*
+        * Execute a query
+        * @throws Exception if query failed
+        * @return PDOStatement
+        */
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute($params);
+        return $stmt;
+    }
 }
 ?>
