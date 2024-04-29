@@ -25,7 +25,7 @@ try {
 
                 if ($user) {
                     $_SESSION['user_id'] = $user['id'];
-                    setcookie('user_id', $user['id'], time() + (60), '/', '', false, false); 
+                    setcookie('user_id', $user['id'], time() + (300), '/', '', false, false); 
                     $_SESSION['message'] = ['text' => 'Connexion réussie !', 'type' => 'success'];
                     header('Location: ../index.php');
                     exit();
