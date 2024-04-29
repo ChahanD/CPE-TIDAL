@@ -7,9 +7,11 @@ document.getElementById('searchInput').addEventListener('input', function() {
             .then(response => response.json())
             .then(data => {
                 let suggestionsBox = document.getElementById('suggestionsBox');
+
                 suggestionsBox.innerHTML = data.map(
                     item => `<div class="suggestion-item">${item}</div>`
                 ).join('');
+
                 suggestionsBox.classList.add('show');
                 suggestionsBox.style.display = 'block';
             });

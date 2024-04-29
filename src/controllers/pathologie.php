@@ -3,6 +3,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 include '../models/database.php';
@@ -53,13 +54,21 @@ try {
         exit;
     }
 
+    // Check if user is connected
+    if (!isset($_COOKIE['user_id'])) {
+        $is_user_connected = false;
+    } else {
+        $is_user_connected = true;
+    }
+
     // Render template
     echo $twig->render('./pathologie.html.twig', [
         'symptomes' => $symptomes,
         'meridiens' => $meridiens,
         'meridien_nom' => $meridien_nom,
         'symptome_nom' => $symptome_nom,
-        'pathologies' => $pathologies
+        'pathologies' => $pathologies,
+        'userconnected' => $is_user_connected
     ]);
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage();

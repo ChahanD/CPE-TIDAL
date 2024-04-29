@@ -33,9 +33,11 @@ document.addEventListener('DOMContentLoaded', function() {
         initialView: 'dayGridMonth',
         selectable: true,
         selectMirror: true,
+
         eventContent: function(arg) {
             return { html: '<input type="radio" name="appointment-time" class="fc-event-radio" value="' + arg.event.title + '">' + arg.event.title };
         },
+
         eventClick: function(info) {
             let selectedTime = info.el.querySelector('.fc-event-radio');
             if (selectedTime.checked) {

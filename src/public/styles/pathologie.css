@@ -9,7 +9,7 @@ body {
 
 .text-center {
     text-align: center;
-    color: rgb(0, 0, 0);
+    color: #000000;
     font-size: 90px;
     font-weight: bold;
     margin-top: 50px;
@@ -26,36 +26,36 @@ body {
 }
 
 .btn {
-    background-color: #1e1e1e94; 
-    color: white; 
-    padding: 14px; 
-    margin: 8px 0; 
-    border: none; 
-    cursor: pointer; 
-    width: 100%; 
-    border-radius: 10px; 
+    background-color: #1E1E1E94; 
+    color: #FFFFFF;
+    padding: 14px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 10px;
 }
 
 .btn:hover {
-    opacity: 0.8; 
+    opacity: 0.8;
 }
 
 h1, p {
-    color: #333;
-    font-family: Arial, sans-serif; 
+    color: #303030;
+    font-family: Arial, sans-serif;
 }
 
 .table {
-    width: 100%; 
-    max-width: 100%; 
-    margin-bottom: 1rem; 
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
 }
 
 .table th,
 .table td {
-    padding: 0.75rem; 
-    vertical-align: top; 
-    border-top: 1px solid #dee2e6; 
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #DEE2E6;
 }
 
 .input-group {

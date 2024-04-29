@@ -9,7 +9,7 @@ html, body {
 }
 
 #calendar {
-    background-color: white;
+    background-color: #FFFFFF;
 }
 
 .text-center {
@@ -19,12 +19,11 @@ html, body {
     margin-bottom: 40px;
 }
 
-
 p {
-    margin-bottom: 50px; 
+    margin-bottom: 50px;
 }
 
 h1, p {
-    color: #333;
-    font-family: Arial, sans-serif; 
+    color: #303030;
+    font-family: Arial, sans-serif;
 }

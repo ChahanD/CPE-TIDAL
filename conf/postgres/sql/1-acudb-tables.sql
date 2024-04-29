@@ -2516,3 +2516,24 @@ INSERT INTO public.symptPatho(idS, idP, aggr) VALUES
 (447, 112, false),
 (448, 113, false)
 ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `users`
+--
+
+DROP TABLE IF EXISTS public.users;
+CREATE TABLE public.users (
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(255) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL
+);
+COMMENT ON TABLE public.users
+  IS 'Utilisateurs';
+COMMENT ON COLUMN public.users.id
+  IS "Clé primaire (id) de l'utilisateur";
+COMMENT ON COLUMN public.users.username
+  IS 'Nom d''utilisateur';
+COMMENT ON COLUMN public.users.password
+  IS 'Mot de passe haché';

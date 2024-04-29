@@ -124,5 +124,39 @@ class Database {
             throw new Exception("Failed to get autocompletion list: " . $e->getMessage());
         }
     }
+
+    public function login($username, $password) {
+        try {
+            $query = $this->conn->prepare("SELECT * FROM users WHERE username = :username LIMIT 1");
+            $query->execute([':username' => $username]);
+            $user = $query->fetch(PDO::FETCH_ASSOC);
+            if (!$user) {
+                return false;
+            }
+            if (!password_verify($password, $user['password'])) {
+                return false;
+            }
+            return $user;
+        } catch(PDOException $e) {
+            throw new Exception("Failed to login: " . $e->getMessage());
+        }
+    }
+
+    public function register($username, $password) {
+        try {
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+            $query = $this->conn->prepare("INSERT INTO users (username, password) VALUES (:username, :password)");
+            $query->execute([':username' => $username, ':password' => $hashedPassword]);
+            return true;
+        } catch(PDOException $e) {
+            throw new Exception("Failed to register: " . $e->getMessage());
+        }
+    }
+
+    public function getUserById($id) {
+        $query = $this->conn->prepare('SELECT * FROM users WHERE id = :id');
+        $query->execute([':id' => $id]);
+        return $query->fetch(PDO::FETCH_ASSOC);
+    }
 }
 ?>

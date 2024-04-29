@@ -4,6 +4,12 @@
 {% block description %}Page_de_recherche_des_pathologies{% endblock %}
 
 {% block content %}
+    {% if userconnected %}
+        <p>Vous êtes connecté.</p>
+    {% else %}
+        <p>Vous n'êtes pas connecté.</p>
+    {% endif %}
+
     <div class="container">
         <div class="row text-center">
             <div class="col-12">
@@ -11,7 +17,6 @@
             </div>
         </div>
 
-        <!-- Filter and Search Form -->
         <div class="row my-4">
             <div class="col-12">
                 <form action="../controllers/pathologie.php" method="get">
@@ -21,29 +26,26 @@
                             <div id="suggestionsBox" class="dropdown-menu" style="display: none;"></div>
                         </div>
 
-                        <select name="symptome" class="form-select select-symptome">
+                        <select name="symptome" class="form-select select-symptome" {% if not userconnected %}disabled{% endif %}>
                             <option value="">Choisir un Symptôme</option>
                             {% for symptome in symptomes %}
                                 <option value="{{ symptome.ids }}"> {{ symptome.desc }}</option>
                             {% endfor %}
                         </select>
 
-                        <!-- Dropdown for meridian -->
-                        <select name="meridien" class="form-select">
+                        <select name="meridien" class="form-select" {% if not userconnected %}disabled{% endif %}>
                             <option value="">Choisir Méridiens</option>
                             {% for meridien in meridiens %}
                                 <option value="{{ meridien.code }}">{{ meridien.nom }}</option>
                             {% endfor %}
                         </select>
-
-                
                     </div>
-                    <button class="btn btn-outline-secondary" type="submit">Recherche</button>
+
+                    <button class="btn btn-outline-secondary" type="submit" {% if not userconnected %}disabled{% endif %}>Recherche</button>
                 </form>
             </div>
         </div>
 
-        <!-- Affichage du Filtre Actif et Bouton de Réinitialisation -->
         <div class="row mb-3">
             <div class="col-10">
                 <p>Filtres actifs : {{ symptome_nom|default('Aucun') }} - {{ meridien_nom|default('Aucun') }}</p>

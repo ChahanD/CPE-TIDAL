@@ -11,7 +11,6 @@
             </div>
         </div>
         
-        <!-- Filter and Search Form -->
         <div class="row my-4">
             <div class="col-12">
                 <form action="../controllers/symptome.php" method="get">
@@ -21,7 +20,6 @@
                             <div id="suggestionsBox" class="dropdown-menu" style="display: none;"></div>
                         </div>
 
-                        <!-- Dropdown for meridian -->
                         <select name="meridien" class="form-select">
                             <option value="">Select Meridian</option>
                             {% for meridien in meridiens %}
@@ -37,7 +35,6 @@
             </div>
         </div>
 
-        <!-- Affichage du Filtre Actif et Bouton de Réinitialisation -->
         <div class="row mb-3">
             <div class="col-10">
                 <p>Filtre actif : {{ meridien_nom|default('Aucun') }}</p>
