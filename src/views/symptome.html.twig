@@ -5,12 +5,14 @@
 
 {% block content %}
     <div class="container">
+        <!-- Title -->
         <div class="row text-center">
             <div class="col-12">
                 <h1>Recherche de symptomes</h1>
             </div>
         </div>
-        
+
+        <!-- Search form -->
         <div class="row my-4">
             <div class="col-12">
                 <form action="../controllers/symptome.php" method="get">
@@ -35,6 +37,7 @@
             </div>
         </div>
 
+        <!-- Active filters and delete active filters button -->
         <div class="row mb-3">
             <div class="col-10">
                 <p>Filtre actif : {{ meridien_nom|default('Aucun') }}</p>
@@ -45,6 +48,7 @@
             </div>
         </div>
 
+        <!-- List of symptoms -->
         <table class='table table-striped'>
             <tr><th>Liste des symptomes</th></tr>
             {% for symptome in symptomes %}

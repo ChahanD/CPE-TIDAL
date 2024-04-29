@@ -10,5 +10,6 @@ $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/views');
 $twig = new \Twig\Environment($loader);
 
 
+// Render template
 echo $twig->render('./index.html.twig', ['currentPage' => 'index']);
 ?>

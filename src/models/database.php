@@ -3,10 +3,17 @@ class Database {
     private $conn;
 
     public function __construct() {
+        /*
+        * Database connection
+        */
         $this->connect();
     }
 
     private function connect() {
+        /*
+        * Connection to the database
+        * @throws Exception if connection failed
+        */
         $host = 'postgres';
         $dbname = 'acudb';
         $user = 'postgres';
@@ -21,6 +28,11 @@ class Database {
     }
 
     public function getSymptomes() {
+        /*
+        * Get symptomes from the database
+        * @throws Exception if query failed
+        * @return array of symptomes
+        */
         try {
             $symptomeQuery = $this->conn->query('SELECT ids, "desc" FROM symptome');
             return $symptomeQuery->fetchAll(PDO::FETCH_ASSOC);
@@ -30,6 +42,11 @@ class Database {
     }
 
     public function getMeridiens() {
+        /*
+        * Get meridiens from the database
+        * @throws Exception if query failed
+        * @return array of meridiens
+        */
         try {
             $meridienQuery = $this->conn->query("SELECT code, nom FROM meridien");
             return $meridienQuery->fetchAll(PDO::FETCH_ASSOC);
@@ -39,6 +56,11 @@ class Database {
     }
 
     public function getMeridienNom($meridienCode) {
+        /*
+        * Get meridien name from the database
+        * @throws Exception if query failed
+        * @return string meridien name
+        */
         try {
             $meridienQuery = $this->conn->prepare("SELECT nom FROM meridien WHERE code = :code");
             $meridienQuery->execute([':code' => $meridienCode]);
@@ -50,6 +72,11 @@ class Database {
     }
 
     public function getSymptomeNom($symptomeCode) {
+        /*
+        * Get symptome name from the database
+        * @throws Exception if query failed
+        * @return string symptome name
+        */
         try {
             $symptomeQuery = $this->conn->prepare('SELECT "desc" FROM symptome WHERE ids = :code');
             $symptomeQuery->execute([':code' => $symptomeCode]);
@@ -61,6 +88,11 @@ class Database {
     }
 
     public function getListPathologies($params) {
+        /*
+        * Get list of pathologies from the database
+        * @throws Exception if query failed
+        * @return array of pathologies
+        */
         try {
             $sql = "SELECT * FROM patho WHERE 1=1";
             $execute_params = [];
@@ -85,6 +117,11 @@ class Database {
     }
 
     public function getListSymptomes($params) {
+        /*
+        * Get list of symptomes from the database
+        * @throws Exception if query failed
+        * @return array of symptomes
+        */
         try {
             $sql = "SELECT DISTINCT s.* FROM symptome s
                     LEFT JOIN symptpatho sp ON s.ids = sp.ids
@@ -108,6 +145,11 @@ class Database {
     }
 
     public function getListAutocompletation($searchTerm, $tableName) {
+        /*
+        * Get autocompletion list from the database
+        * @throws Exception if query failed
+        * @return array of autocompletion list
+        */
         try {
             if ($tableName ==='symptome') {
                 $stmt = $this->conn->prepare('SELECT "desc" FROM symptome WHERE "desc" ILIKE :searchTerm LIMIT 10');
@@ -126,6 +168,11 @@ class Database {
     }
 
     public function login($username, $password) {
+        /*
+        * Login user
+        * @throws Exception if query failed
+        * @return array user data
+        */
         try {
             $query = $this->conn->prepare("SELECT * FROM users WHERE username = :username LIMIT 1");
             $query->execute([':username' => $username]);
@@ -143,6 +190,11 @@ class Database {
     }
 
     public function register($username, $password) {
+        /*
+        * Register user
+        * @throws Exception if query failed
+        * @return boolean
+        */
         try {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             $query = $this->conn->prepare("INSERT INTO users (username, password) VALUES (:username, :password)");
@@ -154,6 +206,11 @@ class Database {
     }
 
     public function getUserById($id) {
+        /*
+        * Get user by its id
+        * @throws Exception if query failed
+        * @return array user data
+        */
         $query = $this->conn->prepare('SELECT * FROM users WHERE id = :id');
         $query->execute([':id' => $id]);
         return $query->fetch(PDO::FETCH_ASSOC);

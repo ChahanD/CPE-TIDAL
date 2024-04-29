@@ -11,5 +11,6 @@ $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../views');
 $twig = new \Twig\Environment($loader);
 
 
+// Render template
 echo $twig->render('./rendez-vous.html.twig', ['currentPage' => 'rdv']);
 ?>

@@ -25,7 +25,6 @@ try {
                 $user = $db->login($username, $password);
 
                 if ($user) {
-                    // Connexion réussie, stocker l'ID de l'utilisateur dans la session et créer un cookie
                     $_SESSION['user_id'] = $user['id'];
                     setcookie('user_id', $user['id'], time() + (60), '/', '', false, false); 
                     $_SESSION['message'] = ['text' => 'Connexion réussie !', 'type' => 'success'];

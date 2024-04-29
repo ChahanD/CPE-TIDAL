@@ -11,11 +11,6 @@
     width: 100%;
 }
 
-#suggestionsBoxPathologie {
-    position: absolute;
-    width: 100%;
-}
-
 .input-group .select-symptome {
     width: 35% !important;
 }

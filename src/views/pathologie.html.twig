@@ -4,6 +4,7 @@
 {% block description %}Page_de_recherche_des_pathologies{% endblock %}
 
 {% block content %}
+    <!-- Check if user is connected -->
     {% if userconnected %}
         <p>Vous êtes connecté.</p>
     {% else %}
@@ -11,12 +12,14 @@
     {% endif %}
 
     <div class="container">
+        <!-- Title -->
         <div class="row text-center">
             <div class="col-12">
                 <h1>Recherche de pathologies</h1>
             </div>
         </div>
 
+        <!-- Search form -->
         <div class="row my-4">
             <div class="col-12">
                 <form action="../controllers/pathologie.php" method="get">
@@ -46,6 +49,7 @@
             </div>
         </div>
 
+        <!-- Active filters and delete active filters button -->
         <div class="row mb-3">
             <div class="col-10">
                 <p>Filtres actifs : {{ symptome_nom|default('Aucun') }} - {{ meridien_nom|default('Aucun') }}</p>
@@ -56,6 +60,7 @@
             </div>
         </div>
 
+        <!-- List of pathologies -->
         <table class='table table-striped'>
             <tr><th>Liste des pathologies</th></tr>
             {% for pathologie in pathologies %}
