@@ -7,9 +7,17 @@ Ce projet est une application web d'acupuncture traditionnelle. Il a été déve
 
 ## Instructions d'installation
 
-Pour lancer le projet, vous devez avoir Docker installé sur notre machine. Ensuite, exécutez la commande suivante dans le répertoire racine du projet :
+1) Installation de Docker : Docker est nécessaire pour exécuter votre projet. Si vous ne l'avez pas déjà installé, vous pouvez le télécharger et l'installer à partir du site officiel de Docker. Suivez les instructions d'installation pour votre système d'exploitation.
 
-commande pour lancer le projet :
+2) Clonage du projet : Vous devez cloner le projet sur votre machine locale. Ouvrez un terminal et exécutez la commande suivante :
+  
+  ```bash
+  git clone https://github.com/cpe-lyon/projet-tidal-theacu-bros.git
+  ```
+
+3) Lancement du projet :  
+
+Pour lancer le projet, vous devez avoir Docker installé sur notre machine. Ensuite, exécutez la commande suivante dans le répertoire racine du projet :
 
 ```bash
 
@@ -65,6 +73,20 @@ Explication des différents dossiers et fichiers :
 - **`public/`**  Ce dossier contient les fichiers statiques (images, scripts, styles) de l'application. Ces fichiers sont servis directement par le serveur web lorsque des requêtes HTTP sont envoyées pour ces ressources.
 - **`vendor/`** Ce dossier contient les dépendances PHP du projet, qui sont installées par Composer. Ces dépendances peuvent être utilisées n'importe où dans notre code en utilisant l'instruction *require* ou *include*.
 - **`views/`** Ce dossier contient les fichiers Twig qui servent à générer les pages HTML de l'application. Ces fichiers sont utilisés par les fichiers dans le dossier `controllers/` pour générer les réponses HTML.
+  
+## Fonctionnalités de l'application
+
+Notre application web d'acupuncture traditionnelle offre les fonctionnalités suivantes :
+
+- Authentification : Les utilisateurs peuvent se connecter à l'application et certaines fonctionnalités comme la recherche dans la page pathologie sont maintenant accessible.
+- Visualisation des symptomes / pathologies : Les utilisateurs peuvent voir une liste de tous les symptômes disponibles, ainsi que les pathologies associées à chaque symptôme. Nous avons mis en place une liste d'autocompletation qui s'apparente à une api rest pour chacune des pages et nous avons utilisé une base de données PostgreSQL pour stocker ces informations.
+- Prise de rendez-vous : Les utilisateurs peuvent avoir accès à l'agenda des pratiquants afin de prendre rendez-vous.
+- API : L'application offre une API qui permet d'obtenir des informations sur les maladies et les utilisateurs. Cette fonctionnalité est gérée par les fichiers getdiseases.php et getusers.php dans le dossier api/.
+- Base de données : L'application utilise une base de données pour stocker toutes les informations. La connexion à la base de données est gérée par le fichier database.php dans le dossier models/.
+  
+## Fonctionnement de l'api REST
+
+L'API REST de notre application permet de récupérer les données de la base de données en utilisant des requêtes HTTP. Les données sont renvoyées au format JSON, grace à une requête HTTP GET. Cette requete est envoyée à l'API en utilisant l'URL suivante : `http://localhost:50180/api/getdiseases.php` ou `http://localhost:50180/api/getusers.php`. Pour getdiseases.php, nous avons utilisé des filtres sur les id des pathologies, leur type, le méridien et leur description. En revanche pour getusers.php, nous avons utilisé des filtres seulement sur les id des utilisateurs. Les données renvoyées par l'API peuvent être utilisées par d'autres applications pour afficher les informations sur les pathologies et les utilisateurs de notre application.
 
 ## Normes d’accessibilité de niveau AAA
 
@@ -72,15 +94,16 @@ Nous avons employé le logiciel Nu Html Checker pour assurer la conformité de n
 
 ## Améliorations possibles
 
-Suite à notre entretien, nous avons mis en place l'utiliastion d'un point d'entrée unique pour les fichiers .php. Ces derniers devront être placés dans le dossier `api/` et devront être appelés via le fichier `index.php` situé à la racine du projet. Pour ce qui concerne les améliorations possibles de notre code, l'utilisation de cookies côté client peut générer des problèmes de sécurité. En effet, les cookies sont stockés sur le navigateur de l'utilisateur et peuvent être modifiés par ce dernier. Il est donc préférable de stocker les informations sensibles côté serveur. Mais par manque de temps, nous n'avons pas pu implémenter ces fonctionnalités.
+Suite à notre entretien, nous avons mis en place l'utilisation d'un point d'entrée unique pour les fichiers .php. Ces derniers devront être placés dans le dossier `controllers/` et devront être appelés via le fichier `index.php` situé à la racine du projet. Pour ce qui concerne les améliorations possibles de notre code, l'utilisation de cookies côté client peut générer des problèmes de sécurité. En effet, les cookies sont stockés sur le navigateur de l'utilisateur et peuvent être modifiés par ce dernier. Il est donc préférable de stocker les informations sensibles côté serveur. Nous aurions aimé implémenter dans la page rendez-vous, un agenda spécifique pour chaques pratiquants ainsi que l'ajout dans la base de donnée des rendez-vous pris par les utilisateurs afin de mettre à jour l'agenda. Mais par manque de temps, nous n'avons pas pu implémenter ces fonctionnalités.
 
 ## Contributors
 
 L'ensemble du projet à été réalisé par les éleves 4ETI suivants:
-    - Maxime  Balleur
-    - Maxence Di-Meo
-    - Chahan  Donikian
-    - Alice   Esmilaire
+
+- Maxime  Balleur
+- Maxence Di-Meo
+- Chahan  Donikian
+- Alice   Esmilaire
 
 ## Webographie
 
